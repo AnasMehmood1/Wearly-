@@ -1,33 +1,43 @@
-"use client";
-import React from "react";
-import Image from "next/image";
+"use client"
 
-const Item = ({ product }: { product: any }) => {
+import Image from "next/image"
+import { ShoppingCart } from "lucide-react"
+import { Button } from "@/components/ui/button"
+
+
+
+
+const Item = ({ product }: any) => {
   return (
-    <div className="w-[25%] h-[50vh] hover:bg-gray-100 overflow-hidden transition-shadow duration-300">
+    <div className="group relative w-full sm:w-[300px] bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
       {/* Image Section */}
-      <div className="relative w-full h-48">
+      <div className="relative aspect-square overflow-hidden bg-gray-100">
         <Image
-          src={product.image} // This should be a valid URL
-          alt="item"
+          src={product.image || "/placeholder.svg"}
+          alt={product.name}
           fill
-          className="object-cover"
+          className="object-cover transition-transform duration-300 group-hover:scale-105"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
 
-      {/* Text Content */}
-      <div className="p-6">
-        <h2 className="text-xl font-semibold mb-2">{product.name}</h2>
-        <p className="text-gray-600 mb-4">{product.description}</p>
+      {/* Content Section */}
+      <div className="p-4">
+        <h2 className="text-lg font-semibold line-clamp-1 mb-1">{product.name}</h2>
+        <p className="text-sm text-muted-foreground line-clamp-2 mb-4 h-10">{product.description}</p>
 
         {/* Price & Action */}
-        <div className="flex items-center justify-between mt-10">
-          <span className="text-lg font-bold">${product.price}</span>
-          <span className="text-sm font-bold">Add To Cart</span>
+        <div className="flex items-center justify-between">
+          <span className="text-lg font-bold">${product.price.toFixed(2)}</span>
+          <Button size="sm" className="group/button">
+            <ShoppingCart className="h-4 w-4 mr-2 transition-transform group-hover/button:scale-110" />
+            Add to Cart
+          </Button>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Item;
+export default Item
+
