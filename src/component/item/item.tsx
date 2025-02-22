@@ -3,14 +3,17 @@
 import Image from "next/image"
 import { ShoppingCart } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 
 
 
 const Item = ({ product }: any) => {
   return (
+ 
     <div className="group relative w-full sm:w-[300px] bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
       {/* Image Section */}
+          <Link href={`/product/${product._id}`}>
       <div className="relative aspect-square overflow-hidden bg-gray-100">
         <Image
           src={product.image || "/placeholder.svg"}
@@ -20,12 +23,19 @@ const Item = ({ product }: any) => {
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
+      </Link>
 
       {/* Content Section */}
       <div className="p-4">
         <h2 className="text-lg font-semibold line-clamp-1 mb-1">{product.name}</h2>
         <p className="text-sm text-muted-foreground line-clamp-2 mb-4 h-10">{product.description}</p>
+       
 
+        <div className="flex items-center justify-between">
+        <p className="text-sm text-muted-foreground line-clamp-2 mb-4 h-10">{product.category}</p>
+        <p className="text-sm text-muted-foreground line-clamp-2 mb-4 h-10">{product.stock}</p>
+        </div>
+       
         {/* Price & Action */}
         <div className="flex items-center justify-between">
           <span className="text-lg font-bold">${product.price.toFixed(2)}</span>
@@ -36,6 +46,7 @@ const Item = ({ product }: any) => {
         </div>
       </div>
     </div>
+    
   )
 }
 

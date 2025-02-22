@@ -17,6 +17,7 @@ import { CartPanel } from "@/components/cart-panel"
 
 
 
+
 export function SiteHeader() {
   const [isCartOpen, setIsCartOpen] = useState(false)
   // Add state for authentication (to be implemented)
@@ -32,11 +33,13 @@ export function SiteHeader() {
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger>Women</NavigationMenuTrigger>
+                  <Link href="/product/women">
+                    <NavigationMenuTrigger>Women</NavigationMenuTrigger>
+                  </Link>
                 
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger>Men</NavigationMenuTrigger>
+                  <Link href="/product/men">  <NavigationMenuTrigger>Men</NavigationMenuTrigger></Link>
           
                 </NavigationMenuItem>
                 <NavigationMenuItem>

@@ -19,7 +19,7 @@ export default function FeatureProduct() {
       }
 
       const data = await res.json();
-      setProductItem(data.products);
+      setProductItem(data.products.slice(0, 4));
     } catch (error) {
       console.error("Error fetching products:", error);
     }
