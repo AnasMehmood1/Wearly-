@@ -14,7 +14,7 @@ const Item = ({ product }: any) => {
           className="object-cover"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
-        <div className="absolute bottom-10 left-3 right-3 bg-white py-4 border-t border-gray-100">
+        <div className="absolute bottom-0 left-0 right-0 bg-white py-4 border-t border-gray-100">
           <div className="px-4 flex justify-between items-start">
             <div>
               <h3 className="text-[15px] font-normal leading-tight">{product.name}</h3>

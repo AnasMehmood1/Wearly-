@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react"
 import { Slider } from "@/components/ui/slider"
 import { Checkbox } from "@/components/ui/checkbox"
 
-const WomenPage = () => {
+const ProductPage = () => {
   const [category, setCategory] = useState<any[]>([])
   const [priceRange, setPriceRange] = useState([0, 1000])
   const [selectedSizes, setSelectedSizes] = useState<string[]>([])
@@ -16,8 +16,8 @@ const WomenPage = () => {
   const fetchCategory = useCallback(async () => {
     const res = await fetch("http://localhost:3000/api/product/allproduct")
     const data = await res.json()
-    const womenProducts = data.products.filter((p: any) => p.category === "women")
-    setCategory(womenProducts)
+    
+    setCategory(data.products)
   }, [])
 
   useEffect(() => {
@@ -128,5 +128,5 @@ const WomenPage = () => {
   )
 }
 
-export default WomenPage
+export default ProductPage
 

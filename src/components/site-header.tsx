@@ -43,7 +43,9 @@ export function SiteHeader() {
           
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger>Kids</NavigationMenuTrigger>
+                  <Link href="/product">
+                    <NavigationMenuTrigger>Products</NavigationMenuTrigger>
+                  </Link>
              
                 </NavigationMenuItem>
               </NavigationMenuList>

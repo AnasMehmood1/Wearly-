@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState, useCallback } from "react"
-import Item from "../item/item"
+import Item from "./item"
 import Link from "next/link"
 
 export default function FeatureProduct() {
@@ -21,7 +21,7 @@ export default function FeatureProduct() {
       }
 
       const data = await res.json()
-      setProductItem(data.products.slice(0, 4))
+      setProductItem(data.products.slice(0, 3))
     } catch (error) {
       console.error("Error fetching products:", error)
     }
@@ -43,7 +43,7 @@ export default function FeatureProduct() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {productItem.length === 0 ? (
           <p className="text-gray-500">No products found</p>
         ) : (
