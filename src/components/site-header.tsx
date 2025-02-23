@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { ShoppingCart, User, Settings } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -12,7 +12,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
-import { CartPanel } from "@/components/cart-panel"
+import { CartPanel } from "@/components/ui/cart-panel"
 
 
 
@@ -23,6 +23,12 @@ export function SiteHeader() {
   // Add state for authentication (to be implemented)
   const isAuthenticated = false
   const isAdmin = true // Set to true to show the admin icon
+  const [cartItems, setCartItems] = useState<any[]>([])
+
+  useEffect(() => {
+    const storedCart = JSON.parse(localStorage.getItem("cartItems") || "[]")
+    setCartItems(storedCart)
+  }, [])
 
   return (
     <header className="w-full border-b">
@@ -59,9 +65,12 @@ export function SiteHeader() {
 
           {/* Icons and Auth */}
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" onClick={() => setIsCartOpen(true)}>
+            <Button variant="ghost" size="icon" onClick={() => setIsCartOpen(true)} className="relative">
               <ShoppingCart className="h-5 w-5" />
               <span className="sr-only">Shopping Cart</span>
+              <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-black rounded-full">
+                {cartItems.length}
+              </span>
             </Button>
             {isAuthenticated ? (
               <Button variant="ghost" size="icon">

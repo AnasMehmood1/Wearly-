@@ -29,6 +29,34 @@ const ProductDetailPage = ({ params }: any) => {
 
   if (!product) return <p>Loading...</p>
 
+  const addToCart = () => {
+    const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]")
+  
+    // Check if the product already exists in the cart
+    const existingProductIndex = cartItems.findIndex((item:any) => item.id === product._id)
+  
+    if (existingProductIndex !== -1) {
+      // If product already exists, increase its quantity
+      cartItems[existingProductIndex].quantity += 1
+    } else {
+      // If product is new, add it with quantity 1
+      const cartItem = {
+        id: product._id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        quantity: 1,
+      }
+      cartItems.push(cartItem)
+    }
+  
+    localStorage.setItem("cartItems", JSON.stringify(cartItems))
+    alert("Product added to cart")
+  }
+  
+ 
+
+
   const sizes = ["XS", "S", "M", "L", "XL"] // Static sizes for frontend display
 
   return (
@@ -78,7 +106,7 @@ const ProductDetailPage = ({ params }: any) => {
 
             {/* Add to Cart Button */}
             <div className="flex items-center justify-between">
-              <button className="bg-black text-white py-2 px-4 rounded-full text-sm font-medium hover:bg-gray-800 transition-colors">
+              <button className="bg-black text-white py-2 px-4 rounded-full text-sm font-medium hover:bg-gray-800 transition-colors" onClick={addToCart}>
                 Add to Cart
               </button>
               <button className="text-black underline text-sm font-medium hover:text-gray-600">View Size Guide</button>

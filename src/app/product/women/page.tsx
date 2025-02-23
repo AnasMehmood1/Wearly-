@@ -8,24 +8,46 @@ const WomenPage = () => {
   const [category, setCategory] = useState<any[]>([])
   const [priceRange, setPriceRange] = useState([0, 1000])
   const [selectedSizes, setSelectedSizes] = useState<string[]>([])
+
+  const [selectedOption ,setSelectedOption] = useState<string>("women")
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
+
 
   const sizes = ["XS", "S", "M", "L", "XL"]
   const categories = ["Dresses", "Tops", "Pants", "Skirts", "Outerwear", "Accessories"]
 
-  const fetchCategory = useCallback(async () => {
+  const fetchCategory = useCallback(async (categoryType:string) => {
     const res = await fetch("http://localhost:3000/api/product/allproduct")
     const data = await res.json()
-    const womenProducts = data.products.filter((p: any) => p.category === "women")
-    setCategory(womenProducts)
+   
+    if(categoryType === "all"){
+        setCategory(data.products)
+    }
+    else{
+        const womenProducts = data.products.filter((p: any) => p.category === categoryType)
+        setCategory(womenProducts)
+    }
+
   }, [])
 
   useEffect(() => {
-    fetchCategory()
-  }, [fetchCategory])
+    fetchCategory(selectedOption)
+  }, [fetchCategory , selectedOption])
 
   return (
     <div className="container mx-auto px-4 py-8">
+        <h1 className="text-2xl font-bold mb-4">Products</h1>   
+        <div className="flex justify-between items-center mb-4">
+            <p className="text-sm text-gray-500">Showing all products</p>
+             
+             <select className="text-sm text-gray-500 border border-gray-300 rounded-md px-5 py-2" defaultValue={"women"} onChange={(e)=> setSelectedOption(e.target.value)}>
+             <option value="women">Women</option>
+                <option value="all">All</option>
+                <option value="men">Men</option>
+              
+             </select>
+            
+        </div>
       <div className="flex flex-col md:flex-row gap-8">
         {/* Sidebar */}
         <aside className="w-full md:w-64 space-y-8">
