@@ -1,5 +1,5 @@
 'use client'
-import { SiteHeader } from '@/components/site-header'
+import { SiteHeader } from '@/components/ui/site-header'
 import React from 'react'
 
 const Header = () => {

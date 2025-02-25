@@ -1,30 +1,27 @@
-import { useState, useEffect } from "react"
-import { X, Trash } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetClose } from "@/components/ui/sheet"
-import Image from "next/image"
-import Link from "next/link" // ✅ Import Next.js Link
+import { useState, useEffect } from "react";
+import { X, Trash } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetClose } from "@/components/ui/sheet";
+import Image from "next/image";
+import Link from "next/link"; // ✅ Import Next.js Link
 
-type CartPanelProps = {
-  isOpen: boolean
-  setIsOpen: (isOpen: boolean) => void
-}
+export function CartPanel({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (open: boolean) => void }) {
+  const [cartItems, setCartItems] = useState<any[]>([]); // ✅ Initialize state with an empty array
 
-export function CartPanel({ isOpen, setIsOpen }: CartPanelProps) {
-  const [cartItems, setCartItems] = useState<any[]>([])
-      
   // Load cart items from localStorage
   useEffect(() => {
-    const storedCart = JSON.parse(localStorage.getItem("cartItems") || "[]")
-    setCartItems(storedCart)
-  }, [isOpen])
+    if (isOpen) {
+      const storedCart = JSON.parse(localStorage.getItem("cartItems") || "[]");
+      setCartItems(storedCart);
+    }
+  }, [isOpen]);
 
   // Remove item from cart
   const removeFromCart = (id: string) => {
-    const updatedCart = cartItems.filter((item) => item.id !== id)
-    setCartItems(updatedCart)
-    localStorage.setItem("cartItems", JSON.stringify(updatedCart))
-  }
+    const updatedCart = cartItems.filter((item) => item.id !== id);
+    setCartItems(updatedCart);
+    localStorage.setItem("cartItems", JSON.stringify(updatedCart));
+  };
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -60,14 +57,15 @@ export function CartPanel({ isOpen, setIsOpen }: CartPanelProps) {
           )}
         </div>
 
-        <div className="mt-6">  
-          <div className="flex justify-between">  
+        <div className="mt-6">
+          <div className="flex justify-between">
             <p className="text-sm text-gray-500">Subtotal</p>
-            <p className="text-sm font-medium">${cartItems.reduce((total, item) => total + item.price * item.quantity, 0)}</p>  
+            <p className="text-sm font-medium">
+              ${cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}
+            </p>
           </div>
         </div>
 
-        {/* ✅ Fixed Checkout Button */}
         <div className="mt-6">
           <Link href="/checkout" passHref>
             <Button className="w-full">Checkout</Button>
@@ -75,5 +73,5 @@ export function CartPanel({ isOpen, setIsOpen }: CartPanelProps) {
         </div>
       </SheetContent>
     </Sheet>
-  )
+  );
 }
