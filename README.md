@@ -2,7 +2,7 @@
 
 A modern and stylish e-commerce platform built with Next.js, Shadcn UI, Tailwind CSS, and MongoDB. Wearly offers a seamless shopping experience with high-performance, elegant UI, and an intuitive checkout process
 
-![Blog Screenshot](/Asset/website.png)
+![Blog Screenshot](/public/Asset/website.png)
 
 ---
 
