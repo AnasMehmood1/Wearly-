@@ -62,7 +62,7 @@ export default function FeatureProduct() {
       <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black/30 to-transparent"></div>
 
       <div className="relative z-10 max-w-4xl">
-        <h1 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-4">
+        <h1 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-3xl font-bold mb-2 sm:mb-4">
           Shop the Latest Trends – Your Style, <br className="hidden sm:inline" /> Your Way!
         </h1>
         <p className="text-white text-sm sm:text-base md:text-lg">

@@ -43,7 +43,7 @@ export function SiteHeader() {
     setIsAdmin(false)
   }
 
-  const navItems = ["Women", "Men", "Products"]
+  const navItems = ["Women", "Men", "Product"]
   const secondaryNavItems = ["New", "Clothing", "Dresses", "Beauty", "Accessories", "Sale"]
 
   return (
@@ -103,20 +103,7 @@ export function SiteHeader() {
                     <Link href={`/${item.toLowerCase()}`} legacyBehavior passHref>
                       <NavigationMenuTrigger>{item}</NavigationMenuTrigger>
                     </Link>
-                    <NavigationMenuContent>
-                      <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                        {secondaryNavItems.map((subItem) => (
-                          <li key={subItem} className="row-span-3">
-                            <Link
-                              href="#"
-                              className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                            >
-                              {subItem}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </NavigationMenuContent>
+                    
                   </NavigationMenuItem>
                 ))}
               </NavigationMenuList>
@@ -125,7 +112,7 @@ export function SiteHeader() {
 
           {/* Logo */}
           <Link href="/" className="absolute left-1/2 transform -translate-x-1/2 text-2xl font-bold">
-            VistaMart
+          Wearly 
           </Link>
 
           {/* Icons and Auth */}

@@ -51,7 +51,7 @@ const ProductDetailPage = ({ params }: any) => {
     }
   
     localStorage.setItem("cartItems", JSON.stringify(cartItems))
-    alert("Product added to cart")
+    // alert("Product added to cart")
   }
   
  

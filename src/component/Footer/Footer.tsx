@@ -9,7 +9,7 @@ export function Footer() {
       <div className="container mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="mb-8 md:mb-0">
-            <h2 className="text-2xl font-bold mb-4">VistaMart</h2>
+            <h2 className="text-2xl font-bold mb-4">Wearly</h2>
             <p className="mb-4">Your one-stop shop for fashion, beauty, and lifestyle products.</p>
             <div className="flex space-x-4">
               <Link href="#" className="hover:text-gray-800">
@@ -97,7 +97,7 @@ export function Footer() {
           </div>
         </div>
         <div className="border-t border-gray-200 mt-8 pt-8 text-sm text-center">
-          <p>&copy; 2024 VistaMart. All rights reserved.</p>
+          <p>&copy; 2024 Wearly. All rights reserved.</p>
           <div className="mt-2 space-x-4">
             <Link href="#" className="hover:text-gray-800">
               Privacy Policy

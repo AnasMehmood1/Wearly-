@@ -64,13 +64,13 @@ const LoginPage = () => {
                 <div className="flex-1">
                     {/* Logo */}
                     <Link href="/" className="inline-block mb-12">
-                        <h1 className="text-xl font-bold">VistaMart</h1>
+                        <h1 className="text-xl font-bold">Wearly</h1>
                     </Link>
 
                     {/* Login Form */}
                     <div className="max-w-sm mx-auto w-full">
                         <h1 className="text-3xl font-bold mb-2">Welcome back!</h1>
-                        <p className="text-gray-600 mb-8">Sign in to your VistaMart account</p>
+                        <p className="text-gray-600 mb-8">Sign in to your Wearly account</p>
 
                         <form className="space-y-4" onSubmit={handleSubmit}>
                             <div>
@@ -97,18 +97,19 @@ const LoginPage = () => {
                                 Log in
                             </Button>
                         </form>
-                    </div>
-                </div>
-
-                {/* Sign up link */}
-                <div className="text-center mt-8">
+                        <div className="text-center mt-8">
                     <p className="text-gray-600">
                         Don't have an account?{" "}
-                        <Link href="/signup" className="text-black hover:underline font-medium">
+                        <Link href="/sign-up" className="text-black hover:underline font-medium">
                             Sign up for free
                         </Link>
                     </p>
                 </div>
+                    </div>
+                </div>
+
+                {/* Sign up link */}
+                
             </div>
 
             {/* Right Side - Image */}
@@ -116,7 +117,7 @@ const LoginPage = () => {
                 <div className="absolute inset-0">
                     <Image
                         src={"/Asset/login1.jpg"}
-                        alt="VistaMart shopping experience"
+                        alt=" shopping experience"
                         width={1080}
                         height={1080}
                         className="object-cover w-full h-full"
@@ -127,12 +128,12 @@ const LoginPage = () => {
                 {/* Content Overlay */}
                 <div className="absolute bottom-20 left-12 right-12 text-white">
                     <p className="text-2xl font-light leading-relaxed mb-4">
-                        VistaMart offers an incredible shopping experience with a wide range of products. Discover the latest trends
+                        Wearly offers an incredible shopping experience with a wide range of products. Discover the latest trends
                         and enjoy seamless online shopping with us.
                     </p>
                     <div className="space-y-2">
                         <p className="font-medium">AnasMehmood</p>
-                        <p className="text-white/80">Head of Customer Experience at VistaMart</p>
+                        <p className="text-white/80">Head of Customer Experience at Wearly</p>
                     </div>
                 </div>
 

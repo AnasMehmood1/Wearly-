@@ -17,7 +17,7 @@ const BoxesComp = () => {
             <div className="bg-white p-8 max-w-[300px] ">
               <p className="text-gray-600 text-lg mb-2">Feel the summer</p>
               <h2 className="text-3xl font-bold mb-4">New Bag 1913</h2>
-              <Link href="/shop" className="inline-block text-black hover:text-gray-700 underline underline-offset-4">
+              <Link href="/women" className="inline-block text-black hover:text-gray-700 underline underline-offset-4">
                 Shop Now
               </Link>
             </div>
@@ -37,7 +37,7 @@ const BoxesComp = () => {
               <p className="text-gray-600 text-lg mb-2">Feel the summer</p>
               <h2 className="text-3xl font-bold mb-4">New Collection</h2>
               <Link
-                href="/collection"
+                href="/women"
                 className="inline-block text-black hover:text-gray-700 underline underline-offset-4"
               >
                 Shop Now

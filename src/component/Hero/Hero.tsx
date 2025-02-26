@@ -11,8 +11,8 @@ const Hero = () => {
         </p>
       </div>
 
-      <section className="relative mx-auto w-[95%] h-[300px] sm:h-[400px] md:h-[500px] lg:h-[60vh] bg-center bg-cover mb-10">
-        <Image src="/Asset/left5.jpg" alt="Summer Fashion" layout="fill" objectFit="cover" priority />
+      <section className="relative mx-auto w-[95%] h-[300px] sm:h-[400px] md:h-[500px] lg:h-[80vh] bg-center bg-cover mb-10">
+        <Image src="/Asset/login1.jpg" alt="Summer Fashion" layout="fill" objectFit="cover" priority />
         {/* Light Black Overlay */}
         <div className="absolute inset-0 bg-black/30"></div>
 

@@ -50,12 +50,12 @@ const SignUp = () => {
       <div className="w-full lg:w-1/2 p-8 sm:p-12 xl:p-16 flex flex-col">
         <div className="flex-1">
           <a href="/" className="inline-block mb-12">
-            <h1 className="text-xl font-bold">VistaMart</h1>
+            <h1 className="text-xl font-bold">Wearly</h1>
           </a>
 
           <div className="max-w-sm mx-auto w-full">
             <h1 className="text-3xl font-bold mb-2">Create an account</h1>
-            <p className="text-gray-600 mb-8">Join VistaMart and start shopping today</p>
+            <p className="text-gray-600 mb-8">Join Wearly and start shopping today</p>
 
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div>
@@ -102,13 +102,7 @@ const SignUp = () => {
             <Button  onClick={handleSubmit} className="w-full bg-black text-white hover:bg-gray-800 mt-7">
             Sign Up 
          </Button>
-          </div>
-         
-
-        </div>
-        
-
-        <div className="text-center mt-8">
+         <div className="text-center mt-8">
           <p className="text-gray-600">
             Already have an account?{" "}
             <a href="/login" className="text-black hover:underline font-medium">
@@ -116,6 +110,13 @@ const SignUp = () => {
             </a>
           </p>
         </div>
+          </div>
+         
+
+        </div>
+        
+
+        
       </div>
 
       {/* Right side with placeholder image */}
@@ -133,12 +134,12 @@ const SignUp = () => {
         {/* Content Overlay */}
         <div className="absolute bottom-20 left-12 right-12 text-white">
           <p className="text-2xl font-light leading-relaxed mb-4">
-            Join VistaMart today and unlock a world of amazing products and deals. Start your journey with us and
+            Join Wearly today and unlock a world of amazing products and deals. Start your journey with us and
             experience shopping like never before.
           </p>
           <div className="space-y-2">
             <p className="font-medium">AnasMehmood</p>
-            <p className="text-white/80">Head of Customer Experience at VistaMart</p>
+            <p className="text-white/80">Head of Customer Experience at Wearly</p>
           </div>
         </div>
 
