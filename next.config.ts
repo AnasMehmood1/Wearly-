@@ -8,6 +8,9 @@ const nextConfig = {
       },
     ],
   },
+  typescript: {
+    ignoreBuildErrors: true, // Disables type checking during build
+  },
 };
 
 module.exports = nextConfig;

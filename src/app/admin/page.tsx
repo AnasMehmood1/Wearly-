@@ -1,5 +1,5 @@
 "use client"
-
+import AdminLayout from "@/component/adminLayout"
 import type React from "react"
 import { useState, useRef, useEffect } from "react"
 import { Input } from "@/components/ui/input"
@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Trash2, Upload } from "lucide-react"
+import Image from "next/image"
 
 interface Product {
   _id: string
@@ -134,7 +135,9 @@ const AdminPage = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <AdminLayout>
+
+<div className="container mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-6">Admin Page</h1>
 
       <form onSubmit={handleAddProduct} className="mb-8 bg-gray-50 p-6 rounded-lg shadow-sm">
@@ -215,7 +218,7 @@ const AdminPage = () => {
               </Button>
             </div>
             {newProduct.image && (
-              <img
+              <Image
                 src={newProduct.image || "/placeholder.svg"}
                 alt="Preview"
                 className="mt-2 w-40 h-40 object-cover rounded"
@@ -259,6 +262,7 @@ const AdminPage = () => {
         ))}
       </div>
     </div>
+    </AdminLayout>
   )
 }
 
