@@ -1,6 +1,8 @@
-## 📸 Screenshot  
+# 🛍️ Wearly – Your Fashion Destination
 
-![Blog Homepage](/blog-frontend//public/home.png)  
+A modern and stylish e-commerce platform built with Next.js, Shadcn UI, Tailwind CSS, and MongoDB. Wearly offers a seamless shopping experience with high-performance, elegant UI, and an intuitive checkout process
+
+![Blog Screenshot](/Asset/website.png)
 
 ---
 
@@ -30,13 +32,7 @@
 
 
 
-# 🛍️ Wearly – Your Fashion Destination
 
-A modern and stylish e-commerce platform built with Next.js, Shadcn UI, Tailwind CSS, and MongoDB. Wearly offers a seamless shopping experience with high-performance, elegant UI, and an intuitive checkout process
-
-![Blog Screenshot](/blog-frontend//public/blog.png)
-
----
 
 ## ⚙️ Installation  
 
