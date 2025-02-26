@@ -29,7 +29,7 @@ const LoginPage = () => {
             });
     
             const data = await response.json();
-              console.log(data)
+            //   console.log(data)
             if (response.ok) {
                 // Store token in localStorage
                 if (data.token) {

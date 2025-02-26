@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import UserModel from "@/models/user.model"
 import AdminModel from "@/models/admin.model"
-import { connectDB } from "@/dbConfig/dbConfig"
+import { connectDB } from "@/lib/dbConfig/dbConfig"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 

@@ -27,7 +27,7 @@ const SignUp = () => {
                 }
             })
             const data = await response.json()
-            console.log(data)
+            // console.log(data)
             alert("Sign up successful")
             router.push("/login")
         } catch (error) {

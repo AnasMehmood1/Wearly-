@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from "react"
 import Item from "../item/item"
 import Link from "next/link"
-
+import Image from "next/image"
 export default function FeatureProduct() {
   const [productItem, setProductItem] = useState<any[]>([])
 
@@ -32,6 +32,8 @@ export default function FeatureProduct() {
   }, [fetchData])
 
   return (
+    <>
+  
     <section className="container mx-auto px-4 py-16">
       <div className="flex items-start justify-between mb-12">
         <div>
@@ -51,6 +53,25 @@ export default function FeatureProduct() {
         )}
       </div>
     </section>
+
+    <section className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[60vh] flex items-left justify-center px-4 sm:px-6 lg:px-10 flex-col">
+      <Image src="/Asset/left4.jpg" alt="Latest fashion trends" layout="fill" objectFit="cover" priority />
+      <div className="absolute inset-0 bg-black/30"></div>
+
+      {/* Overlay at the bottom */}
+      <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black/30 to-transparent"></div>
+
+      <div className="relative z-10 max-w-4xl">
+        <h1 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-4">
+          Shop the Latest Trends – Your Style, <br className="hidden sm:inline" /> Your Way!
+        </h1>
+        <p className="text-white text-sm sm:text-base md:text-lg">
+          Discover your unique look and shop with confidence in our diverse collection{" "}
+          <br className="hidden md:inline" /> of clothing, accessories, and more.
+        </p>
+      </div>
+    </section>
+    </>
   )
 }
 

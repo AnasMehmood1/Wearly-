@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import ProductModel from "@/models/product.model";
-import { connectDB } from "@/dbConfig/dbConfig";
+import { connectDB } from "@/lib/dbConfig/dbConfig";
 import { uploadImage } from "@/helper/cloudinary";
 
 export async function POST(request: NextRequest) {

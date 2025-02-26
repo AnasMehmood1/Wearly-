@@ -70,39 +70,51 @@ const AdminPage = () => {
   }
 
   const handleAddProduct = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!newProduct.name || !newProduct.category || newProduct.price <= 0) {
-      console.error("Name, Category, and a valid Price are required!")
-      return
+      console.error("Name, Category, and a valid Price are required!");
+      return;
     }
-
-    setIsLoading(true)
+  
+    setIsLoading(true);
+  
     try {
+      const formData = new FormData();
+      formData.append("name", newProduct.name);
+      formData.append("category", newProduct.category);
+      formData.append("description", newProduct.description);
+      formData.append("stock", newProduct.stock.toString());
+      formData.append("price", newProduct.price.toString());
+  
+      // Append the image file if available
+      if (fileInputRef.current?.files?.[0]) {
+        formData.append("image", fileInputRef.current.files[0]);
+      }
+  
       const response = await fetch("http://localhost:3000/api/product/addproduct", {
         method: "POST",
-        body: JSON.stringify(newProduct),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      const data = await response.json()
+        body: formData,
+      });
+  
+      const data = await response.json();
       if (response.ok) {
-        console.log("Product added successfully")
-        setNewProduct({ name: "", category: "", description: "", image: "", stock: 0, price: 0 })
+        console.log("Product added successfully");
+        setNewProduct({ name: "", category: "", description: "", image: "", stock: 0, price: 0 });
         if (fileInputRef.current) {
-          fileInputRef.current.value = ""
+          fileInputRef.current.value = "";
         }
-        fetchProducts() // Refresh the product list
+        fetchProducts(); // Refresh the product list
       } else {
-        throw new Error(data.message || "Failed to add product")
+        throw new Error(data.message || "Failed to add product");
       }
+  
     } catch (error) {
-      console.error("Error adding product:", error)
-      console.error("Failed to add product. Please try again.")
+      console.error("Error adding product:", error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
+  
 
   const handleDeleteProduct = async (id: string) => {
     try {
@@ -110,7 +122,7 @@ const AdminPage = () => {
         method: "DELETE",
       })
       if (response.ok) {
-        console.log("Product deleted successfully")
+        // console.log("Product deleted successfully")
         fetchProducts() // Refresh the product list
       } else {
         throw new Error("Failed to delete product")
