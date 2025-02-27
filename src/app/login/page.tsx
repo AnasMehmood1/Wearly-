@@ -31,18 +31,17 @@ const LoginPage = () => {
             const data = await response.json();
             //   console.log(data)
             if (response.ok) {
-                // Store token in localStorage
                 if (data.token) {
                     localStorage.setItem("token", data.token);
+                    // console.log(data.token ,"this is token ")
                 }
-    
-                // Check user role and navigate
+                
                 if (data.user?.role === "admin") {
-                    localStorage.setItem("token", JSON.stringify({ user: { role: "admin" } }));
+                    localStorage.setItem("role", "admin"); // Store role separately
                     router.push("/admin");
                 } else {
-                    localStorage.setItem("token", JSON.stringify({ user: { role: "user" } }));
-                    router.push("/");  
+                    localStorage.setItem("role", "user"); // Store role separately
+                    router.push("/");
                 }
             } else {
                 alert(data.message || "Invalid email or password");
@@ -120,8 +119,8 @@ const LoginPage = () => {
                         alt=" shopping experience"
                         width={1080}
                         height={1080}
-                        className="object-cover w-full h-full"
-                        priority
+                        // className="object-cover w-full h-full"
+                         
                     />
                 </div>
 

@@ -13,6 +13,12 @@ import {
   NavigationMenuTrigger,
   NavigationMenuContent,
 } from "@/components/ui/navigation-menu"
+import {jwtDecode} from "jwt-decode"; // Import jwt-decode
+import { JwtPayload } from "jwt-decode";
+
+interface CustomJwtPayload extends JwtPayload {
+  role: string;
+}
 
 export function SiteHeader() {
   const [isCartOpen, setIsCartOpen] = useState(false)
@@ -21,21 +27,22 @@ export function SiteHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   useEffect(() => {
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
+    // console.log("Token from localStorage:", token);
     if (token) {
       try {
-        const parsedToken = JSON.parse(token)
-        if (parsedToken?.user?.role === "admin") {
-          setIsAdmin(true)
+        const decodedToken = jwtDecode<CustomJwtPayload>(token);
+        if (decodedToken.role === "admin") {
+          setIsAdmin(true);
         }
-        setIsLoggedIn(true)
+        setIsLoggedIn(true);
       } catch (error) {
-        console.error("Error parsing token:", error)
-        setIsAdmin(false)
-        setIsLoggedIn(false)
+        console.error("Error decoding token:", error);
+        setIsAdmin(false);
+        setIsLoggedIn(false);
       }
     }
-  }, [])
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token")
@@ -147,7 +154,7 @@ export function SiteHeader() {
         </div>
 
         {/* Secondary Navigation - Desktop Only */}
-        <nav className="hidden md:flex items-center justify-center bg-black text-white">
+        <nav className="w-full hidden md:flex items-center justify-center bg-black text-white">
           <ul className="flex gap-8 py-4">
             {secondaryNavItems.map((item) => (
               <li key={item}>

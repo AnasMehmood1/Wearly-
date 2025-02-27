@@ -2,8 +2,9 @@
 import React, { useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ChevronLeft, ChevronRight,} from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 const SignUp = () => {
     const router = useRouter()
@@ -49,9 +50,9 @@ const SignUp = () => {
     <div className="flex min-h-screen">
       <div className="w-full lg:w-1/2 p-8 sm:p-12 xl:p-16 flex flex-col">
         <div className="flex-1">
-          <a href="/" className="inline-block mb-12">
+          <Link href="/" className="inline-block mb-12">
             <h1 className="text-xl font-bold">Wearly</h1>
-          </a>
+          </Link>
 
           <div className="max-w-sm mx-auto w-full">
             <h1 className="text-3xl font-bold mb-2">Create an account</h1>
@@ -105,9 +106,9 @@ const SignUp = () => {
          <div className="text-center mt-8">
           <p className="text-gray-600">
             Already have an account?{" "}
-            <a href="/login" className="text-black hover:underline font-medium">
+            <Link href="/login" className="text-black hover:underline font-medium">
               Log in
-            </a>
+            </Link>
           </p>
         </div>
           </div>
@@ -125,9 +126,10 @@ const SignUp = () => {
           <Image
             src="/Asset/login1.jpg"
             alt="VistaMart shopping experience"
-            className="object-cover w-full h-full"
+          //  layout="fill" 
             width={1080}
             height={1080}
+            
           />
         </div>
 

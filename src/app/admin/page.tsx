@@ -236,10 +236,12 @@ const AdminPage = () => {
         {products.map((product) => (
           <Card key={product._id} className="flex flex-col overflow-hidden transition-shadow hover:shadow-lg">
             <div className="relative aspect-square">
-              <img
+              <Image
                 src={product.image || "/placeholder.svg"}
                 alt={product.name}
                 className="object-cover w-full h-full"
+                width={300}
+                height={300}
               />
               <div className="absolute top-2 right-2 bg-black text-white px-2 py-1 text-sm font-semibold rounded">
                 ${product.price.toFixed(2)}
@@ -262,7 +264,7 @@ const AdminPage = () => {
         ))}
       </div>
     </div>
-    </AdminLayout>
+     </AdminLayout>
   )
 }
 
