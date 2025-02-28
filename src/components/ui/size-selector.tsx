@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 
@@ -10,10 +9,7 @@ interface SizeSelectorProps {
 }
 
 export function SizeSelector({ sizes, onSizeSelect }: SizeSelectorProps) {
-  const [selectedSize, setSelectedSize] = useState<string | null>(null)
-
   const handleSizeChange = (size: string) => {
-    setSelectedSize(size)
     onSizeSelect(size)
   }
 

@@ -1,10 +1,10 @@
 // src/app/api/admin/signup/route.ts
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 import AdminModel from "@/models/admin.model";
 import { connectDB } from "@/lib/dbConfig/dbConfig";
 import bcrypt from "bcryptjs";
 
-export async function POST(request: NextRequest) {
+export async function POST() {
   await connectDB();
   
   try {

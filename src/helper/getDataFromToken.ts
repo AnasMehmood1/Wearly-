@@ -1,6 +1,13 @@
 import jwt from "jsonwebtoken";
 import {NextRequest} from "next/server";
 const secret = "this is my secret key";
+
+interface DecodedToken {
+  id: string;
+  role: string;
+  iat: number;
+}
+
 export const getDataFromToken = (request: NextRequest) => { 
 
    try {
@@ -11,11 +18,13 @@ export const getDataFromToken = (request: NextRequest) => {
      }
     //  console.log(token);
  
-   const decodedToken:any = jwt.verify(token, secret);
+   const decodedToken = jwt.verify(token, secret) as DecodedToken;
      
      return decodedToken.id;
-   } catch (error:any) {
-    console.log(error.message); 
+   } catch (error) {
+     if (error instanceof Error) {
+       console.log(error.message);
+     }
    }
      
 

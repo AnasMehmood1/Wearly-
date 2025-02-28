@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDataFromToken } from "@/helper/getDataFromToken";
-import UserModel from "@/models/user.model";
+// import UserModel from "@/models/user.model";
 import AdminModel from "@/models/admin.model";
 export async function GET(request: NextRequest){
      
@@ -19,11 +19,11 @@ export async function GET(request: NextRequest){
             user: user,
         }, { status: 200 });    
     
-    } catch (error:any) {
-        console.log(error.message);
+    } catch (error) {
+        // console.log(error.message);
         return NextResponse.json({
             success: false,
-                message: "User not found",
+                message: "User not found", error
         }, { status: 404 });
         
     }

@@ -4,8 +4,18 @@ import { useState, useEffect, useCallback } from "react"
 import { Slider } from "@/components/ui/slider"
 import { Checkbox } from "@/components/ui/checkbox"
 
+interface Product {
+  _id: string;
+  name: string;
+  category: string;
+  price: number;
+  description: string;
+  image: string;
+  stock: number;
+}
+
 const WomenPage = () => {
-  const [category, setCategory] = useState<any[]>([])
+  const [category, setCategory] = useState<Product[]>([])
   const [priceRange, setPriceRange] = useState([0, 1000])
   const [selectedSizes, setSelectedSizes] = useState<string[]>([])
 
@@ -16,18 +26,17 @@ const WomenPage = () => {
   const sizes = ["XS", "S", "M", "L", "XL"]
   const categories = ["Dresses", "Tops", "Pants", "Skirts", "Outerwear", "Accessories"]
 
-  const fetchCategory = useCallback(async (categoryType:string) => {
+  const fetchCategory = useCallback(async (categoryType: string) => {
     const res = await fetch("http://localhost:3000/api/product/allproduct")
     const data = await res.json()
-   
+    
     if(categoryType === "all"){
         setCategory(data.products)
     }
     else{
-        const womenProducts = data.products.filter((p: any) => p.category === categoryType)
+        const womenProducts = data.products.filter((p: Product) => p.category === categoryType)
         setCategory(womenProducts)
     }
-
   }, [])
 
   useEffect(() => {
@@ -139,7 +148,7 @@ const WomenPage = () => {
         <div className="flex-1">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {category.length > 0 ? (
-              category.map((product: any) => <Item key={product._id} product={product} />)
+              category.map((product: Product) => <Item key={product._id} product={product} />)
             ) : (
               <p className="col-span-full text-center text-gray-500">No products found</p>
             )}

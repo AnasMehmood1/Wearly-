@@ -1,20 +1,30 @@
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 import ProductModel from "@/models/product.model";
 import { connectDB } from "@/lib/dbConfig/dbConfig";
 
-connectDB();
-export async function GET(request: NextRequest) { 
-    
+export async function GET() {
     try {
+        await connectDB(); // Ensure DB is connected inside the function
+
         const products = await ProductModel.find();
-        if(!products) {
-            return NextResponse.json({message: "No products found"}, {status: 404});    
+
+        if (products.length === 0) {
+            return NextResponse.json(
+                { success: false, message: "No products found" },
+                { status: 404 }
+            );
         }
-        return NextResponse.json({products}, {status: 200});        
+
+        return NextResponse.json(
+            { success: true, products },
+            { status: 200 }
+        );
+
     } catch (error) {
-        
-        return NextResponse.json({message: "Internal Server Error"}, {status: 500});    
-        
+        console.error("Error fetching products:" ,error);
+        return NextResponse.json(
+            { success: false, message: "Internal Server Error" },
+            { status: 500 }
+        );
     }
-    
 }

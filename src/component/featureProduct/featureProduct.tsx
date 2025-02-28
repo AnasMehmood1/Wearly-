@@ -4,8 +4,19 @@ import { useEffect, useState, useCallback } from "react"
 import Item from "../item/item"
 import Link from "next/link"
 import Image from "next/image"
+
+interface Product {
+  _id: string;
+  name: string;
+  category: string;
+  price: number;
+  description: string;
+  image: string;
+  stock: number;
+}
+
 export default function FeatureProduct() {
-  const [productItem, setProductItem] = useState<any[]>([])
+  const [productItem, setProductItem] = useState<Product[]>([])
 
   const fetchData = useCallback(async () => {
     try {
@@ -49,7 +60,7 @@ export default function FeatureProduct() {
         {productItem.length === 0 ? (
           <p className="text-gray-500">No products found</p>
         ) : (
-          productItem.map((item: any) => <Item key={item._id} product={item} />)
+          productItem.map((item: Product) => <Item key={item._id} product={item} />)
         )}
       </div>
     </section>

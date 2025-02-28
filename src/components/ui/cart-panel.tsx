@@ -5,8 +5,16 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetClose } from "@/comp
 import Image from "next/image";
 import Link from "next/link"; // ✅ Import Next.js Link
 
+interface CartItem {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  image: string;
+}
+
 export function CartPanel({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (open: boolean) => void }) {
-  const [cartItems, setCartItems] = useState<any[]>([]); // ✅ Initialize state with an empty array
+  const [cartItems, setCartItems] = useState<CartItem[]>([]); // ✅ Initialize state with an empty array
 
   // Load cart items from localStorage
   useEffect(() => {

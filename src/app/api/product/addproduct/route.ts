@@ -4,45 +4,76 @@ import { connectDB } from "@/lib/dbConfig/dbConfig";
 import { uploadImage } from "@/helper/cloudinary";
 
 export async function POST(request: NextRequest) {
-    await connectDB();
-
     try {
-        const formData = await request.formData(); // Get FormData
-        const name = formData.get("name") as string;
-        const price = formData.get("price") as string;
-        const description = formData.get("description") as string;
-        const imageFile = formData.get("image") as File;
-        const category = formData.get("category") as string;
-        const stock = formData.get("stock") as string;
-        if (!imageFile) throw new Error("Image is required");
+        // Connect to database
+        await connectDB();
+
+        // Parse form data
+        const formData = await request.formData();
+        const name = formData.get("name")?.toString();
+        const price = formData.get("price")?.toString();
+        const description = formData.get("description")?.toString();
+        const category = formData.get("category")?.toString();
+        const stock = formData.get("stock")?.toString();
+        const imageFile = formData.get("image") as File | null;
+
+        // Validate required fields
+        if (!name || !price || !description || !category || !stock || !imageFile) {
+            return NextResponse.json(
+                { success: false, message: "All fields are required" },
+                { status: 400 }
+            );
+        }
+
+        // Convert price and stock to numbers
+        const priceNumber = parseFloat(price);
+        const stockNumber = parseInt(stock, 10);
+
+        if (isNaN(priceNumber) || isNaN(stockNumber)) {
+            return NextResponse.json(
+                { success: false, message: "Invalid price or stock value" },
+                { status: 400 }
+            );
+        }
 
         // Convert file to base64
         const buffer = await imageFile.arrayBuffer();
         const base64Image = `data:${imageFile.type};base64,${Buffer.from(buffer).toString("base64")}`;
 
         // Upload image to Cloudinary
-        const imageUrl = await uploadImage(base64Image);
+        let imageUrl;
+        try {
+            imageUrl = await uploadImage(base64Image);
+        } catch (error) {
+            return NextResponse.json(
+                { success: false, message: "Image upload failed", error },
+                { status: 500 }
+            );
+        }
 
+        // Create and store product
         const product = await ProductModel.create({
             name,
-            price,
+            price: priceNumber,
             description,
-            image: imageUrl, // Store Cloudinary URL
+            image: imageUrl,
             category,
-            stock
+            stock: stockNumber,
         });
 
-        return NextResponse.json({
-            success: true,
-            message: "Product added successfully",
-            product,
-        }, { status: 201 });
+        return NextResponse.json(
+            { success: true, message: "Product added successfully", product },
+            { status: 201 }
+        );
 
-    } catch (error: any) {
-        console.error(error.message);
-        return NextResponse.json({
-            success: false,
-            message: error.message || "Product not added",
-        }, { status: 400 });
+    } catch (error: unknown) {
+        console.error("Error adding product:");
+        return NextResponse.json(
+            { 
+                success: false, 
+                message: error instanceof Error ? error.message : "Unknown error occurred"
+            },
+            { status: 500 }
+        );
     }
 }

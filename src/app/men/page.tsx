@@ -5,7 +5,19 @@ import { Slider } from "@/components/ui/slider"
 import { Checkbox } from "@/components/ui/checkbox"
 
 const MenPage = () => {
-    const [category, setCategory] = useState<any[]>([])
+   
+  interface Product {
+    _id: string;
+    name: string;
+    description: string;
+    price: number;
+    image: string;
+    stock: number;
+    category: string;
+    quantity: number;
+  }
+
+    const [category, setCategory] = useState<[]>([])
     const [priceRange, setPriceRange] = useState([0, 1000])
     const [selectedSizes, setSelectedSizes] = useState<string[]>([])
     const [selectedCategories, setSelectedCategories] = useState<string[]>([])
@@ -22,7 +34,7 @@ const MenPage = () => {
         if (categoryType === "all") {
           setCategory(data.products) // Show all products
         } else {
-          const filteredProducts = data.products.filter((p: any) => p.category === categoryType)
+          const filteredProducts = data.products.filter((p: Product) => p.category === categoryType)
           setCategory(filteredProducts)
         }
       } catch (error) {
@@ -143,7 +155,7 @@ const MenPage = () => {
         <div className="flex-1">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {category.length > 0 ? (
-              category.map((product: any) => <Item key={product._id} product={product} />)
+              category.map((product: Product ) => <Item key={product._id} product={product} />)
             ) : (
               <p className="col-span-full text-center text-gray-500">No products found</p>
             )}

@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, ReactNode } from "react";
 import { JwtPayload } from "jwt-decode";
 import { jwtDecode } from "jwt-decode";
 
@@ -8,7 +8,7 @@ interface CustomJwtPayload extends JwtPayload {
   role: string;
 }
 
-const AdminLayout = ({ children } :any) => {
+const AdminLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
 
@@ -33,7 +33,7 @@ const AdminLayout = ({ children } :any) => {
         router.push("/")
         console.log("token not found")
     }
-  }, [])
+  }, [router])
 
   if (loading) return <p>Checking permissions...</p>;
 

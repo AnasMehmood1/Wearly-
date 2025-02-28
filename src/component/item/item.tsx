@@ -3,7 +3,17 @@
 import Image from "next/image"
 import Link from "next/link"
 
-const Item = ({ product }: any) => {
+interface Product {
+  _id: string;
+  name: string;
+  category: string;
+  price: number;
+  description: string;
+  image: string;
+  stock: number;
+}
+
+const Item = ({ product }: { product: Product }) => {
   return (
     <Link href={`/product/${product._id}`} className="block relative">
       <div className="relative aspect-[3/4] w-full overflow-hidden bg-gray-100">

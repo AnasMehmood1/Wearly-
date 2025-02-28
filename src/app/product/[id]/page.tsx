@@ -1,14 +1,31 @@
 "use client"
 import { useState, useEffect, useCallback } from "react"
 import Image from "next/image"
-import { use } from "react"
+// import { use } from "react"
 import FeatureProduct from "@/component/featureProduct/featureProduct"
 
-const ProductDetailPage = ({ params }: any) => {
-  const resolvedParams = use(params) as { id: string }
-  const { id } = resolvedParams
+interface Product {
+  _id: string;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  stock: number;
+  category: string;
+}
 
-  const [product, setProduct] = useState<any>(null)
+interface CartItem {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+  quantity: number;
+}
+
+const ProductDetailPage = ({ params }: { params: { id: string } }) => {
+  const { id } = params;
+
+  const [product, setProduct] = useState<Product | null>(null)
   const [selectedSize, setSelectedSize] = useState<string | null>(null)
 
   const fetchProduct = useCallback(async () => {
@@ -33,7 +50,7 @@ const ProductDetailPage = ({ params }: any) => {
     const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]")
   
     // Check if the product already exists in the cart
-    const existingProductIndex = cartItems.findIndex((item:any) => item.id === product._id)
+    const existingProductIndex = cartItems.findIndex((item: CartItem) => item.id === product._id)
   
     if (existingProductIndex !== -1) {
       // If product already exists, increase its quantity

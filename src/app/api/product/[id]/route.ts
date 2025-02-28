@@ -1,39 +1,46 @@
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 import ProductModel from "@/models/product.model";
 import { connectDB } from "@/lib/dbConfig/dbConfig";
-
-connectDB();
+import mongoose from "mongoose";
 
 export async function GET(
-    request: NextRequest,
-    context: { params: { id: string } }
-  ) {
-    // Await the params object:
-    const { id } = await Promise.resolve(context.params);
-    try {
-        const product = await ProductModel.findById(id);
-        if (!product) {
-            return NextResponse.json({
-                success: false,
-                message: "Product not found",
-            }, {status: 404});
-        }
-        return NextResponse.json({
-            success: true,
-            product,
-        }, {status: 200});
-        
+  
+  context: { params: { id: string } }
+) {
+  try {
+    // Ensure the database is connected
+    await connectDB();
 
-    } catch (error) {
-        console.log(error);
-        return NextResponse.json({
-            success: false,
-            message: "Internal Server Error",
-        }, {status: 500});
-        
+    // Extract `id` from the context
+    const { id } = context.params;
+
+    // Validate if `id` is a valid MongoDB ObjectId
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return NextResponse.json(
+        { success: false, message: "Invalid product ID" },
+        { status: 400 }
+      );
     }
-    
 
+    // Fetch product by ID
+    const product = await ProductModel.findById(id);
+
+    if (!product) {
+      return NextResponse.json(
+        { success: false, message: "Product not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      { success: true, product },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error fetching product:", error);
+    return NextResponse.json(
+      { success: false, message: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
 }
-           
-
