@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState ,useEffect } from "react"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -35,12 +35,26 @@ interface CheckoutFormData {
   cvv?: string; // Optional if not always required
 }
 
+interface CartItem {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  image: string; // Ensure image is defined
+}
+
 const CheckoutPage = () => {
   const [step, setStep] = useState<CheckoutStep>("shipping")
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("card")
   const [orderPlaced, setOrderPlaced] = useState(false)
+  const [cartItems, setCartItems] = useState<CartItem[]>([])
 
-  const cartItems: Product[] = JSON.parse(localStorage.getItem("cartItems") || "[]")
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedCart = JSON.parse(localStorage.getItem("cartItems") || "[]")
+      setCartItems(storedCart)
+    }
+  }, [])
 
   // ✅ Fixed: Ensure reduce starts with `0`, not a `Product`
   const subtotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
