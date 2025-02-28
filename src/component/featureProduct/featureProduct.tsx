@@ -20,7 +20,7 @@ export default function FeatureProduct() {
 
   const fetchData = useCallback(async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/product/allproduct", {
+      const res = await fetch("/api/product/allproduct", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

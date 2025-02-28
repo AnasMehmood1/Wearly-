@@ -39,7 +39,7 @@ const AdminPage = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/product/allproduct")
+      const response = await fetch("/api/product/allproduct")
       if (!response.ok) {
         throw new Error("Failed to fetch products")
       }
@@ -92,7 +92,7 @@ const AdminPage = () => {
         formData.append("image", fileInputRef.current.files[0]);
       }
   
-      const response = await fetch("http://localhost:3000/api/product/addproduct", {
+      const response = await fetch("/api/product/addproduct", {
         method: "POST",
         body: formData,
       });
@@ -119,7 +119,7 @@ const AdminPage = () => {
 
   const handleDeleteProduct = async (id: string) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/product/deleteproduct/${id}`, {
+      const response = await fetch(`/deleteproduct/${id}`, {
         method: "DELETE",
       })
       if (response.ok) {

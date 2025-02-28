@@ -30,7 +30,7 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
 
   const fetchProduct = useCallback(async () => {
     try {
-      const res = await fetch(`http://localhost:3000/api/product/${id}`)
+      const res = await fetch(`/api/product/${id}`)
       const data = await res.json()
       setProduct(data.product)
     } catch (error) {

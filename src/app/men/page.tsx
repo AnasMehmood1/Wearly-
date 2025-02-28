@@ -28,7 +28,7 @@ const MenPage = () => {
   
     const fetchCategory = useCallback(async (categoryType: string) => {
       try {
-        const res = await fetch("http://localhost:3000/api/product/allproduct")
+        const res = await fetch("/api/product/allproduct")
         const data = await res.json()
   
         if (categoryType === "all") {
