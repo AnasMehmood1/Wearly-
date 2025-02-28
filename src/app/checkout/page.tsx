@@ -13,16 +13,7 @@ import Image from "next/image"
 type CheckoutStep = "shipping" | "payment" | "review"
 type PaymentMethod = "card" | "paypal" | "cash"
 
-interface Product {
-  id: string ;
-  name: string;
-  description: string;
-  price: number;
-  images: string[];
-  sizes?: string[];
-  category: string;
-  quantity: number;
-}
+
 
 interface CartItem {
   id: string;
@@ -32,7 +23,7 @@ interface CartItem {
   image: string;
 }
 
-const CheckoutPage = (product:Product) => {
+const CheckoutPage = () => {
   const [step, setStep] = useState<CheckoutStep>("shipping")
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("card")
   const [orderPlaced, setOrderPlaced] = useState(false)
