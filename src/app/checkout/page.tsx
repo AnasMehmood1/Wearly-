@@ -13,16 +13,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 type CheckoutStep = "shipping" | "payment" | "review"
 type PaymentMethod = "card" | "paypal" | "cash"
 
-interface Product {
-  id: string
-  name: string
-  description: string
-  price: number
-  image: string
-  sizes?: string[]
-  category: string
-  quantity: number
-}
+
 
 interface CheckoutFormData {
   firstName: string;
