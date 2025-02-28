@@ -1,46 +1,61 @@
 "use client"
 
 import { useState } from "react"
-import { useForm, SubmitHandler, FieldValues } from "react-hook-form"
+import { useForm, SubmitHandler } from "react-hook-form"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Separator } from "@/components/ui/separator"
 import { CreditCard, Truck, CheckCircle } from "lucide-react"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import Image from "next/image"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 type CheckoutStep = "shipping" | "payment" | "review"
 type PaymentMethod = "card" | "paypal" | "cash"
 
+interface Product {
+  id: string
+  name: string
+  description: string
+  price: number
+  image: string
+  sizes?: string[]
+  category: string
+  quantity: number
+}
 
-
-interface CartItem {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-  image: string;
+interface CheckoutFormData {
+  firstName: string;
+  lastName: string;
+  address: string;
+  city: string;
+  postalcode: string;
+  cardNumber?: string; // Optional if not always required
+  expiryDate?: string; // Optional if not always required
+  cvv?: string; // Optional if not always required
 }
 
 const CheckoutPage = () => {
   const [step, setStep] = useState<CheckoutStep>("shipping")
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("card")
   const [orderPlaced, setOrderPlaced] = useState(false)
-  const cartItems: CartItem[] = JSON.parse(localStorage.getItem("cartItems") || "[]")   
 
-  const subtotal = cartItems.reduce((total, item: CartItem) => total + item.price * item.quantity, 0)
+  const cartItems: Product[] = JSON.parse(localStorage.getItem("cartItems") || "[]")
+
+  // ✅ Fixed: Ensure reduce starts with `0`, not a `Product`
+  const subtotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
 
   const shipping = 10
   const total = subtotal + shipping
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm()
+  } = useForm<CheckoutFormData>()
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const onSubmit: SubmitHandler<CheckoutFormData> = (data) => {
     if (step === "shipping") setStep("payment")
     else if (step === "payment") setStep("review")
     else {
@@ -55,29 +70,29 @@ const CheckoutPage = () => {
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Checkout</h1>
       {cartItems.length > 0 ? (
-        <div className="flex flex-col gap-3 py-2">
-          {cartItems.map((item) => (
-            <div key={item.id} className="flex items-center gap-3">
-              <div className="h-16 w-16 overflow-hidden rounded-md border bg-gray-100">
-                <Image
-                  src={item.image || "/placeholder.svg?height=64&width=64"}
-                  alt={item.name}
-                  width={64}
-                  height={64}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <div className="flex-1 space-y-1">
-                <h4 className="text-sm font-medium">{item.name}</h4>
-                <p className="text-xs text-muted-foreground">Qty: {item.quantity}</p>
-              </div>
-              <div className="text-sm font-medium">${item.price.toFixed(2)}</div>
-            </div>
-          ))}
+    <div className="flex flex-col gap-3 py-2">
+      {cartItems.map((item) => (
+        <div key={item.id} className="flex items-center gap-3">
+          <div className="h-16 w-16 overflow-hidden rounded-md border bg-gray-100">
+            <Image
+              src={item.image || "/placeholder.svg?height=64&width=64"}
+              alt={item.name}
+              width={64}
+              height={64}
+              className="h-full w-full object-cover"
+            />
+          </div>
+          <div className="flex-1 space-y-1">
+            <h4 className="text-sm font-medium">{item.name}</h4>
+            <p className="text-xs text-muted-foreground">Qty: {item.quantity}</p>
+          </div>
+          <div className="text-sm font-medium">${item.price.toFixed(2)}</div>
         </div>
-      ) : (
-        <p>No items in the cart.</p>
-      )}
+      ))}
+    </div>
+  ) : (
+    <p>No items in the cart.</p>
+  )}
 
       <div className="flex flex-col md:flex-row gap-8">
         <div className="w-full md:w-2/3">
@@ -122,22 +137,22 @@ const CheckoutPage = () => {
                   <Input id="address" {...register("address", { required: true })} />
                   {errors.address && <span className="text-red-500 text-sm">This field is required</span>}
                 </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="city">City</Label>
-                    <Input id="city" {...register("city", { required: true })} />
-                    {errors.city && <span className="text-red-500 text-sm">This field is required</span>}
-                  </div>
-                  <div>
-                    <Label htmlFor="zipCode">Zip Code</Label>
-                    <Input id="zipCode" {...register("zipCode", { required: true })} />
-                    {errors.zipCode && <span className="text-red-500 text-sm">This field is required</span>}
-                  </div>
+   <div className="grid grid-cols-2 gap-4">
+                 <div>
+                  <Label htmlFor="address">City</Label>
+                  <Input id="address" {...register("city", { required: true })} />
+                  {errors.address && <span className="text-red-500 text-sm">This field is required</span>}
                 </div>
+                <div>
+                  <Label htmlFor="address">postalcode</Label>
+                  <Input id="address" {...register("postalcode", { required: true })} />
+                  {errors.address && <span className="text-red-500 text-sm">This field is required</span>}
+                </div>
+                </div>
+                
               </>
             )}
-
-            {step === "payment" && (
+ {step === "payment" && (
               <>
                 <RadioGroup defaultValue="card" onValueChange={(value) => setPaymentMethod(value as PaymentMethod)}>
                   <div className="flex items-center space-x-2">
@@ -191,37 +206,18 @@ const CheckoutPage = () => {
 
                 <div className="bg-gray-100 p-6 rounded-lg space-y-4">
                   <h3 className="text-lg font-medium">Shipping Details</h3>
-                  <p>
-                    {watchedFields.firstName} {watchedFields.lastName}
-                  </p>
+                  <p>{watchedFields.firstName} {watchedFields.lastName}</p>
                   <p>{watchedFields.address}</p>
-                  <p>
-                    {watchedFields.city}, {watchedFields.zipCode}
-                  </p>
-                </div>
-
-                <div className="bg-gray-100 p-6 rounded-lg space-y-4">
-                  <h3 className="text-lg font-medium">Payment Method</h3>
-                  <p>
-                    {paymentMethod === "card"
-                      ? "Credit Card"
-                      : paymentMethod === "paypal"
-                        ? "PayPal"
-                        : "Cash on Delivery"}
-                  </p>
-                  {paymentMethod === "card" && <p>Card ending in {watchedFields.cardNumber?.slice(-4)}</p>}
                 </div>
 
                 <div className="bg-gray-100 p-6 rounded-lg space-y-4">
                   <h3 className="text-lg font-medium">Order Items</h3>
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span>{cartItems[0].name}</span>
-                      <span>${cartItems[0].price}</span>
-
+                  {cartItems.map((item) => (
+                    <div key={item.id} className="flex justify-between">
+                      <span>{item.name} ({item.quantity})</span>
+                      <span>${item.price * item.quantity}</span>
                     </div>
-                    
-                  </div>
+                  ))}
                   <Separator />
                   <div className="flex justify-between font-semibold">
                     <span>Subtotal</span>
@@ -229,18 +225,14 @@ const CheckoutPage = () => {
                   </div>
                   <div className="flex justify-between">
                     <span>Shipping</span>
-                    <span>$10.00</span>
+                    <span>${shipping}</span>
                   </div>
                   <Separator />
                   <div className="flex justify-between text-lg font-bold">
                     <span>Total</span>
-                            <span>${total}</span>
+                    <span>${total}</span>
                   </div>
                 </div>
-
-                <p className="text-sm text-gray-600">
-                  By placing your order, you agree to our Terms of Service and Privacy Policy.
-                </p>
               </div>
             )}
 
@@ -256,37 +248,36 @@ const CheckoutPage = () => {
             <div className="space-y-2">
               <div className="flex justify-between">
                 <span>Subtotal</span>
-                <span>${subtotal}</span>    
+                <span>${subtotal}</span>
               </div>
               <div className="flex justify-between">
                 <span>Shipping</span>
-                <span>$10.00</span>
+                <span>${shipping}</span>
               </div>
               <Separator />
-              <div className="flex justify-between font-semibold">
+              <div className="flex justify-between text-lg font-bold">
                 <span>Total</span>
-                    <span>${total}</span>
+                <span>${total}</span>
               </div>
             </div>
           </div>
         </div>
       </div>
-
       <Dialog open={orderPlaced} onOpenChange={setOrderPlaced}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Order Placed Successfully!</DialogTitle>
-            <DialogDescription>
-              Thank you for your purchase. Your order has been received and is being processed. You will receive a
-              confirmation email shortly.
-            </DialogDescription>
-          </DialogHeader>
-          <Button onClick={() => setOrderPlaced(false)}>Close</Button>
-        </DialogContent>
-      </Dialog>
+     <DialogContent>
+       <DialogHeader>
+         <DialogTitle>Order Placed Successfully!</DialogTitle>
+         <DialogDescription>
+           Thank you for your purchase. Your order has been received and is being processed. You will receive a
+           confirmation email shortly.
+         </DialogDescription>
+       </DialogHeader>
+       <Button onClick={() => setOrderPlaced(false)}>Close</Button>
+     </DialogContent>
+   </Dialog>
     </div>
+    
   )
 }
 
 export default CheckoutPage
-
