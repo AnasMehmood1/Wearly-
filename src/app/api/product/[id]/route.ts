@@ -1,30 +1,22 @@
-import {  NextResponse } from "next/server";
-import ProductModel from "@/models/product.model";
+import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/dbConfig/dbConfig";
+import ProductModel from "@/models/product.model";
 import mongoose from "mongoose";
 
-export async function GET(
-  
-  context: { params: { id: string } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    // Ensure the database is connected
     await connectDB();
-
-    // Extract `id` from the context
-    const { id } = context.params;
-
-    // Validate if `id` is a valid MongoDB ObjectId
-    if (!mongoose.Types.ObjectId.isValid(id)) {
+    
+    // Validate MongoDB ObjectId
+    if (!mongoose.Types.ObjectId.isValid(params.id)) {
       return NextResponse.json(
-        { success: false, message: "Invalid product ID" },
+        { success: false, message: "Invalid product ID format" },
         { status: 400 }
       );
     }
-
-    // Fetch product by ID
-    const product = await ProductModel.findById(id);
-
+    
+    const product = await ProductModel.findById(params.id);
+    
     if (!product) {
       return NextResponse.json(
         { success: false, message: "Product not found" },
@@ -36,10 +28,15 @@ export async function GET(
       { success: true, product },
       { status: 200 }
     );
+
   } catch (error) {
     console.error("Error fetching product:", error);
     return NextResponse.json(
-      { success: false, message: "Internal Server Error" },
+      { 
+        success: false, 
+        message: "Failed to fetch product",
+        error: error instanceof Error ? error.message : "Unknown error"
+      },
       { status: 500 }
     );
   }

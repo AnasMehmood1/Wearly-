@@ -119,18 +119,16 @@ const AdminPage = () => {
 
   const handleDeleteProduct = async (id: string) => {
     try {
-      const response = await fetch(`/deleteproduct/${id}`, {
+      const response = await fetch(`/api/product/deleteproduct/${id}`, {
         method: "DELETE",
       })
       if (response.ok) {
-        // console.log("Product deleted successfully")
         fetchProducts() // Refresh the product list
       } else {
         throw new Error("Failed to delete product")
       }
     } catch (error) {
       console.error("Error deleting product:", error)
-      console.error("Failed to delete product. Please try again.")
     }
   }
 

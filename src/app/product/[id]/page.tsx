@@ -24,27 +24,39 @@ interface CartItem {
 
 const ProductDetailPage = ({ params }: { params: { id: string } }) => {
   const { id } = params;
-
   const [product, setProduct] = useState<Product | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [selectedSize, setSelectedSize] = useState<string | null>(null)
 
   const fetchProduct = useCallback(async () => {
     try {
+      setIsLoading(true)
       const res = await fetch(`/api/product/${id}`)
+      if (!res.ok) {
+        const errorData = await res.json()
+        throw new Error(errorData.message || 'Failed to fetch product')
+      }
       const data = await res.json()
+      if (!data.success || !data.product) {
+        throw new Error(data.message || 'Product not found')
+      }
       setProduct(data.product)
     } catch (error) {
       console.error("Error fetching product:", error)
+      setError(error instanceof Error ? error.message : 'Failed to load product')
+    } finally {
+      setIsLoading(false)
     }
   }, [id])
 
   useEffect(() => {
-    if (id) {
-      fetchProduct()
-    }
-  }, [id, fetchProduct])
+    fetchProduct()
+  }, [fetchProduct])
 
-  if (!product) return <p>Loading...</p>
+  if (isLoading) return <p>Loading...</p>
+  if (error) return <p>Error: {error}</p>
+  if (!product) return <p>Product not found</p>
 
   const addToCart = () => {
     const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]")
